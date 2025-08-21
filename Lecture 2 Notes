@@ -1,0 +1,76 @@
+lecture 2 notes 
+
+string = set of numbers that are not supposed to be evaluated 
+
+x <- 100 
+when you type x, you get 100 back 
+creating a binding between x and 100 
+
+also have x = 10 and x <<- 10 as versions of assignment 
+NEVER use x=10
+x <<- 10 ; use in specific circumstances 
+
+In R, every object is a vector of that type of object 
+1:10 gets you a vector containing 1 through 10 
+typing 3 gets you a vector of length 1 with the value 3 in it 
+
+<expr1>:<expr2> produces a sequence of nubmers called an array starting at <expr1> and ending at <expr2>
+
+can also denote a collection like 
+c(1,2,3)
+this is a vector -- must be homogenous, every element of the vector has to be the same type 
+
+you can call functions: 
+y <- sin(x); -- you're going into your environment to find a function named sin which will take the sin of whatever you told r x would be 
+
+an expression like <expr>(<a1>, <a2>, ...) is a function call that evaluates the function of the given arguements. 
+
+x <- 10;
+if (x < 100){
+   "Hello"
+} else { 
+   "Goodbye"
+} 
+
+allows us to select which things will be evaluated and which things won't be evaluated 
+
+Loops!!!!!
+For loops and while loops.
+use a while loop when you need to do something an undetermined amount of times (do something until a condition is true). while loops are less common than for loops bc if you make a mistake 
+your while loop will go on forever. most of the time you know how many times you need to loop because you're looping over a vector.
+
+for(x in c(1,2,3)) {
+  print(x)
+} 
+1
+2
+3
+
+... what's the value of x in the environment now? 
+x = 3. there's still one environment and we're changing the value of x in the environment. 
+
+Functions 
+- provide you a little temporary environment where you can bind variables 
+- everytime we call a function we create a new environment. that environment is pre-loaded 
+- functions are environment factories 
+- functions are the fundamental abstraction to collect computations as opposed to for loops, because for loops are always replacing
+
+Variable lookup 
+x <- 1000;
+(function()x)()
+creating a function that returns x then calling it 
+making a temporary environment - when there are multiple environments and we see a name, we look in the most closely created environment. if we don't find no binding in the 
+enclosing environment, then we look up for a value. x is resolved in the global environment. 
+
+make_constant_function <- function(value){
+  function(){
+    value;
+ }
+} 
+
+function evaluates to whatever the last expression in the function is. must be a value of whatever type in the last expression is 
+
+in R, you can put your hands on an environment. 
+
+<- : single arrow says if there is a binding in that environment for x, modify the bonding, and if not, create a binding 
+<<- : look for the closest binding and change it. Use the double arrow, because if you use a single binding of the same name, go up and change it there. 
