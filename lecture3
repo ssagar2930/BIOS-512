@@ -52,3 +52,40 @@ R is not a whitespace sensitive language. doesn't care about new lines. you can 
 
 
 TO LOAD DATA IN 
+- use a data frame 
+
+to do stuff with a data frame, use dplyr -- will do a series of actions together 
+
+dataframe %>% 
+  group_by(property_name) %>%
+  tally() %>%
+  arrange(desc(n)) 
+
+%>% -- pipe operator, put it at the end of each line and it evaluates it all as one expression
+
+property_name is a variable within the data frame but it's not in the global environment 
+- dataframe is in the global environment, but the reason property_name is able to be used is because variables in R have to be homogeneous 
+
+ex <- function(x) {
+  substitute(x); 
+}
+ex(v1+v2) 
+R lets us capture the unevaluated expression 
+v1 + v2 
+giving us the expression bound to x 
+
+when you evaluate any expressions in R, you look up at the environment that the function points to 
+
+Git = history of everything that has ever happened in your repository 
+Git vs. github = totally distinct. Git is the piece of open source software that does version control, Github is just a website. You can use git quite successfully without ever
+using github. 
+
+Repository = directory on your computer 
+
+every process has a working directory
+
+git init = asking operating system to run the program called git. up to git to interpret what this means. 
+
+git branch -m main ## this is calling in a git repository 
+.git = all of the guts of the repository live in a directory 
+
