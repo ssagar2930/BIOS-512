@@ -1,0 +1,54 @@
+Environment is a relationship between a name and a value 
+
+x<<-10 
+- when you define a function, nothing happens except the function is defined 
+- create a tempoerary environment where the function lives 
+- if you want n to go to n+1, use single operator 
+- double arrow searches up in the enclosing environments for something to change 
+
+<- always creates a binding in the current envrionment
+<<- modifies the nearest enclosing binding if it exists, or creates a new one 
+
+Functions 
+- return whatever the last expression is in its body 
+- when you call a function it becomes that 
+- can have default arguments or you can provide arguments 
+example <- function(x=10, y=11) {
+  x+y;
+} 
+
+example()
+example(x=100)
+example(y=13)
+example(y=12, x=1)
+example(x=101) ## the one that is first in the argument list 
+
+21
+111
+23
+13
+112
+
+
+nope <- function(x) {
+  TRUE 
+}
+
+nope(print("Hello Everyone")); ##calling this function for its side effect, which is to print Hello Everyone to the screen. it's not going to print Hello Everyone because we didn't 
+call x, so x has never been evaluated by R 
+
+arguments to functions are not evaluated until you use them inside the body of a function
+
+tidyverse: library of functions, utilities, and behaviors that allow you to write code that is concise and clear 
+
+?sin = gives you documentation of the function 
+
+R is not a whitespace sensitive language. doesn't care about new lines. you can split an expression across multiple lines as long as the thing at the end is a binary operator: 
+10 +
+  11 ## this is fine 
+
+10 
++ 11 ## wrong ish, will evaluate to 10 and then 11 
+
+
+TO LOAD DATA IN 
