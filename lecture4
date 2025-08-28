@@ -1,0 +1,52 @@
+Common Problems with Data Sets
+1. Duplicate Data (records appear multiple times)
+2. Pseudo-Duplicate Data: data that is not strictly identical but is highly correlated with another set of records 
+3. Missing data: missing fields in records can cause otherwise smoot hworkflows to fail. Some functions can lift missing data to spurious values (like 0) which can throw off 
+statistics and models. May also be a bias in which data is missing or records are affected which will modify the results of summaries and modeling.
+  - coded as NA 
+  - if you don't look at data, you might not know it's missing 
+4. Incorrectly encoded missing data: it isn't so uncommon to have missing values encoded in a variety of ways, even in a single dataset. 
+5. Poorly encoded data dumps: .csv files are delimited with commas. Sometimes a database dump can dump feilds which have strings in them which themselves contain commas. 
+6. Inconsistenly encoded dates or values. Dates are the biggest risk! The tidyverse tries to read columns that look like dates as dates, but will struggle to get it right if there 
+are subtle issues. 
+
+library(tidyverse) ## makes R more ergonomic. gives us a bunch of functions. 
+
+df <- read_csv("source_data/character-data.csv", col_types = cols(
+  character = col_character(),
+  universe = col_character(),
+  property_name = col_character(), 
+  value = col_character()
+  )) 
+
+sort(table(df$property_name), decreasing=TRUE)
+- sorting by property name, seeing how many instances of each different name are there 
+
+library(dplyr); ## library is doing shenanigans to see if there is a package called dplyr in the system. A package is an environment (relationship between names and values). takes 
+                    package and slides it into the stack of environments. now, when we type filter, we look into the global environment and don't find it, but we find it in the library.
+                ## if you have two packages that call filter, it'll look at the first one you call 
+just_gender <- filter(df, property_name=="Gender") ## filter the data, but keep all the columns. "property_name" is only being evaluated once. evaluated as a boolean array, which is used
+                                                    to filter the dataset 
+just_gender ## takes a data frame and takes data so you are just filtering data by what you're looking for 
+df$property_name == "Gender" 
+
+[] = double brackets are only for lists 
+
+to find the rows in your dataset that have the value you want: 
+filter(just_gender, value=="Good") 
+
+simplify_strings <- function(s){
+  s <- str_to_lower(s); ## lowercase
+  s <- str_trim(s); ## trim white space 
+  s <- str_replace_all(s, "[a-z]+", "_") ## replace all non ASCII characters with an underscore 
+  s
+} 
+
+Magrittr 
+could eliminate all the assignments ... %>% ( i dont really get this ) 
+
+Programming languages provide boolean operators 
+| where either of them is true we will let a true pass through
+& where both are true we will let a true pass through 
+
+Indentation is important -- we indent our code so things that are conceptually at the same level are indented in the same way 
