@@ -1,0 +1,117 @@
+everything you ever do as a data scientist will involve discrete sets of data presented in a table 
+
+wide dataset - have alot of columns. Trying to collect a bunch of data on people, things aren't gonna be there. 
+
+Joins let us take data from multiple tables and put it together in one big table. 
+
+table = data structure with some columns and some rows. In R, they are called tibbles.
+observation = key idea. one item of interest (often one row, but not always) - 1 row per observation is tidy form. 
+key = column or columns in a dataset which identifies an observation 
+join = just the process of combining tables. almost always using keys. 
+query = any kind of program which uses some tables, joins, filters, subsets columns, creates new columns, and returns a new table. 
+relational database = collection of tables organized along the above lines.
+pivot = when we change our notion of observation we pivot our data so that we have one row per observation 
+- pivot longer: take a wide data frame and make it long. the more specific our observation is, the longer our dataset is. 
+
+
+To actually pivot... 
+library(tidyverse)
+
+students <- read_csv("source_data/frat_boys_basic.csv")
+
+# note we pivot _longer_ because we need more rows for our observations
+student_data <- pivot_longer(students, fraternity:dietary_preference) ##call the columns that you want
+
+mddf(student_data)
+
+- will get an error because there are different types of data. when we pivot longer, taking a bunch of values 
+from different columns and trying to stick them into one column. when you do this, if elements have different types, 
+R will complain that it can't create a column that has multiple types. 
+- several ways to do this -- can pivot multiple times based on the types of columns we have then join the data 
+back together, resulting in a frame where each row is a value observation but with multiple columns, one per type 
+- can also create a list column that boxes anything (puts a wrapper around every object) to have a heterogeneous column 
+- can also convert all the values into characters so you can literally just see the data on each student (since that's what we're trying t
+to answer)
+
+library(tidyverse)
+
+students <- read_csv("source_data/frat_boys_basic.csv")
+
+
+# note we pivot _longer_ because we need more rows for our observations
+student_data <- pivot_longer(students, fraternity:dietary_preference,
+  names_to = "property",
+  values_to = "observation",
+  values_transform = function(x) ifelse(is.na(x), NA, as.character(x))) ## takes a value we're interested in, checks to see if it's not empty, 
+                                                                        keeps it 
+mddf(student_data)
+
+if we want to answer the question about how much data we have about a specific person, we would filter out and count the amount of 
+information we have about each student 
+
+. = current working data frame 
+
+##can also go the other way and pivot long to wide, so one row was a student instead of an observation 
+##have to identify which columns correspond with the observations you're interested in 
+
+##give me a dataset where the name defines the observation. we want name to construct the column, we want the column names
+## to come from the property column, and the values to come from the observation column 
+library(tidyverse)
+
+long_data <- read_csv("derived_data/student_long.csv")
+
+mddf(long_data %>% 
+      pivot_wider(id_cols=name, names_from=property, values_from=observation))
+
+
+JOINS 
+- our data is often intentionally separated into datasets and we need to put it together 
+- when we talk about joins, we always talk about a left and a right table. joins are symmetric, so a left join is the same as a right join.
+- left table is the place where your brain is, and right is where you want to get extra data from 
+- always joining two tables 
+- one of the most common types of joins we'll perform is a left join. referring to which tables constitute an authoritative conception of the data.
+  - left join -- whatever the left table is (table that appears first) is authoritative, so whatever happens during the join, we want to get back out the same 
+                  number of rows you get in the left table. 
+
+library(tidyverse)
+
+students <- read_csv("source_data/student.csv")
+majors <- read_csv("source_data/major.csv")
+fraternities <- read_csv("source_data/fraternity.csv")
+addresses <- read_csv("source_data/address.csv")
+props <- read_csv("source_data/student_properties.csv")
+
+# LEFT JOIN: keep all students, attach majors when present
+mdpre(paste(
+  "students:", nrow(students),
+  "majors:", nrow(majors)
+))
+students_majors_left <- students %>%
+  left_join(majors %>% rename(major_name = name, major_address_id = address_id),
+            by = c("major_id" = "id")) %>% ## want to match major ID with ID. wherever they match, construct a new row. if no match, still get out the same rows as in the left table, 
+                                              but they'll have missing values. all rows in the left table are preserved
+  select(id, name, major_id, major_name, enrollment_date, gpa)
+
+mdpre(paste("left join rows:", nrow(students_majors_left)))
+mddf(students_majors_left)
+
+if you have something in the right table and it's not in the left table, it won't show up. 
+
+most common type of join you'll do is an inner join
+- authoritatively, both tables matter. what we want is only the rows for which we can perform a match 
+- whenever we do an inner join, count the number of rows before and after 
+
+GGPLOT 
+- best application in the R programming language
+- GG=grammar of graphics (set of nouns and verbs combined to create plot) 
+- you always put your histograms next to each other - height is not preattentively processed 
+- lets us go from one off plots to plots that are more professional because it allows us to very easily change labels, 
+change the way that text works, etc. 
+- lets us create associations between data, geometry, and aesthetics. 
+- + is operator overloading 
+
+When you make a plot:
+- figure out how you want to map your data
+- figure out your geometry type (look at ggplot documentation) 
+- construct our plot by calling appropriate geometries 
+- all geometries start with geom_
