@@ -1,0 +1,15 @@
+[[]] vs [] - two brackets is not the element, it's the thing inside the element 
+- in R, we always have an array of strings (even if you have 1 thing, its an array with 1 thing inside of it)
+- list is an array of boxes 
+
+cat vs. print - print function automaitcally tries to format the output in a way that is related to the data types/structure of R code 
+
+unique_vals <- values%>%table() 
+- table shows us what the values are in an array and how many of them there are 
+
+\n = new line 
+\r\n = carriage return 
+
+df %>% group_by(state) %>% tally() %>% arrange(n)
+
+
