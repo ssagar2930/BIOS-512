@@ -1,0 +1,23 @@
+principles of effective visualization: 
+1. diagram first 
+- look for weird things, look for repeats 
+
+2. use the right software 
+- 2 kinds of visualization situations 
+- looking for something that has the rlight abstraction, right level of interpretation 
+- doomed to have the wrong abstraction because the wrong abstraction is the simplest one 
+- ggplot: good for static visualizations where you aren't changing anything (non-interactive visualizations) 
+
+3. using an effective geometry 
+- when plotting data as a line, drawing people to values -- filling in values. values in between two points mean nothing unless they DO mean something
+- bar chart shows contrast more clearly - easier for our brains to compare 
+- bar chart has a single number that shows a summary of a group of poeople. summaries simplify our data.
+
+4. color always means something 
+- be mindful of people are colorblind
+
+5. facets
+- faceted
+
+6. data and models are differen things 
+- every visualization is a model that compresses data to a set amount of salient features 
