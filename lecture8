@@ -1,0 +1,20 @@
+- - - - = only occured in first file 
++ + + + = only occured in second file 
+
+
+git is always telling you exactly what's going on 
+
+git diff
+- if i added everything, what would the stage look like 
+- shows you most recently changed lines of code and then you can get a sense of what is going on 
+- diff is a tool, calculates a patch. patches are chunks 
+
+git hub holy trinity: the tree, the stage, the head 
+
+unless you specifically say so, you are working locally. just sending each other patches 
+
+git status : print info about the trinity
+git add : move a change from the TREE to the STAGE
+git diff : show the difference between the HEAD and the TREE (sans the STAGE)
+git commit : move the STAGE into the HEAD
+git checkout <something> : move something from the HEAD to the TREE
