@@ -1,0 +1,11 @@
+CLUSTERING 
+- more extreme act of summmarization than dimensionality reduction. we have a set of numbers, and instead of saying we 
+can describe its dimensions, we can reduce the structure down past any structure with a topology and into a simple set 
+
+K-MEANS 
+- start with some points living in space 
+- want to automatically sort each point into a given cluster 
+
+Step 1: random assignment of labels 
+Step 2: Calculate center of each cluster (centroids). Going to treat cluster center as official information. 
+Step 3 + iterate: reassign labels, recompute means 
