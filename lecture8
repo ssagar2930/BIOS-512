@@ -18,3 +18,16 @@ git add : move a change from the TREE to the STAGE
 git diff : show the difference between the HEAD and the TREE (sans the STAGE)
 git commit : move the STAGE into the HEAD
 git checkout <something> : move something from the HEAD to the TREE
+
+
+tree = files in the directory
+stage = each commit is a patch file, we make/construct patches in the staging area 
+head = 
+
+git doesn't understand empty directories 
+
+in every situation, want to perform a rebase, not a merge. purpose of a merge is to pull commits from somewhere 
+else on top of your commits. rebase is putting your commits away, pulling a remote or other branch's commits 
+onto the last time you were synced, then applying your commits on top 
+
+during a rebase, you're in a special state where you want to say rebase continue instead of commit 
