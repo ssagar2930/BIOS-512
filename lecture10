@@ -1,0 +1,74 @@
+if you ask AI to write kmeans, will give you single function with a bunch of garbage inside of it
+
+steps
+- randomly label points 
+- calculate mean position of each cluster
+- assign points to closest mean 
+- when the cluster means don't change much, we're done 
+
+label_randomly <- function(n_points, n_clusters) {
+  sample((1:n_points %>% n_clusters)+1, n_points, replace=F)
+}
+
+get_cluster_means <- function(data, labels){
+  data %>% mutate(label_ = labels) %>% group_by(label_) %>% ## 
+  summarise(across(everything(), mean)) %>% 
+  mutate(label=label_) %>% arrange(label)
+} 
+
+if we have the cluster means, we now need to calculate which cluster mean each point is closest to 
+
+have our dataset with labels - need to find means and distance from each point 
+
+assign_cluster <- function(data, means) { 
+  di <- 1:nrow(data);
+  ci <- 1:nrow(means);
+for(point_index in dii) {
+  smallest_dist <- Inf
+  smallest_label <- NA
+for (clus_index in cii) {
+    point <- data[point_index,]
+    clus <- means %>% select(-label_) %>% `[`(clus_index, ) ## implicitly assuming cluster index is the same as the row of the data frame
+    diff <- point - clus
+    dist <- sum(diff*diff)
+    if (dist < smallest_dist) {
+      smallest_dist <- dist;
+      smallest_label <- means[clus_index,]$label_
+  }
+} ## loop over centroids, calculate the distance, if distance is smallest, store the distance and label 
+labels <- c(labels, smallest_label)
+}
+labels
+}
+
+what does it mean not to "change much"
+ddepends. epsilon can give us something that defines what's a huge change 
+
+kmeans_done <- function(old_means, new_means, eps=1e-6 {
+  om <- old_means %>% as.matrix()
+  nm <- new_means %>% as.matrix()
+
+  m <- mean(rowsums((on-nm)^2))
+  if (m < eps) T else F
+} 
+
+mkmeans <- function(data, n_clusters, eps=1e-6) {
+  labels<- label_randomly(nrow(data), n_clusters);
+  old_means<- get_cluster_means(data, labels);
+  done<- F
+  white(!done){
+    labels <- assign_cluster(data, old_means)
+    new_means <- get_cluster_means(data, labels)
+    if kmeans_done(old_means, new_means){
+      done <- T
+    }
+}
+list(labels=labels, means=new_means)
+} 
+
+
+
+
+
+
+
