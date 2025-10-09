@@ -1,0 +1,1 @@
+data points after PCA are same as before PCA - PCA doesn't change data at all, just changes coordinate system in which data is represented 
